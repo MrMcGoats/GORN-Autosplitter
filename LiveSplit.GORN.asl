@@ -6,8 +6,9 @@ state("GORN")
 
 init
 {
-	int vars.arenas=0;
-	int vars.splits=0;
+	vars.arenas=0;
+	vars.splits=0;
+	vars.loads=0;
 }
 
 startup
@@ -17,7 +18,9 @@ startup
 
 isLoading
 {
-	return (current.isLoading != 0);
+		if(current.isLoading !=0 && old.isLoading==0)
+			vars.loads=vars.loads+1;
+		return (current.isLoading != 0);
 }
 
 split
@@ -27,7 +30,8 @@ split
 		vars.arenas=vars.arenas+1;
 	}
 
-	if((settings["NG+"] && vars.arenas==1) || ((vars.splits==0 && vars.arenas==4) || (vars.splits<6 && vars.arenas==5) || vars.arenas==3)
+	//if((settings["NG+"] && current.arenaDone==1 && old.arenaDone==0) || (vars.splits==0 && vars.arenas==4) || (vars.splits<6 && vars.arenas==5) || vars.arenas==3)
+	if(current.arenaDone==1)
 	{
 		vars.splits=vars.splits+1;
 		vars.arenas=0;
@@ -39,10 +43,5 @@ split
 
 start
 {
-	return (current.isLoading != 0); //Start on first loading screen
-}
-
-update
-{
-	return true;
+	return (current.isLoading != 0 && vars.splits==0 && vars.arenas==0); //Start on first loading screen
 }
