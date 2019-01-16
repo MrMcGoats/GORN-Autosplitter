@@ -23,7 +23,7 @@ isLoading
 		return (current.isLoading != 0);
 }
 
-split
+/*split
 {
 	return false; //This part currently doesn't work
 	if(current.arenaDone==1 && old.arenaDone==0)
@@ -46,4 +46,4 @@ start
 {
 	return false; //This part currently doesn't work
 	return (current.isLoading != 0 && vars.splits==0 && vars.arenas==0); //Start on first loading screen
-}
+}*/
