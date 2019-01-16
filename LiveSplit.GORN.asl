@@ -9,6 +9,7 @@ init
 	vars.arenas=0;
 	vars.splits=0;
 	vars.loads=0;
+	vars.isRunning=1;
 }
 
 startup
@@ -18,32 +19,45 @@ startup
 
 isLoading
 {
-		if(current.isLoading !=0 && old.isLoading==0)
-			vars.loads=vars.loads+1;
-		return (current.isLoading != 0);
+	return (current.isLoading != 0);
+}
+
+reset
+{
+	if(vars.isRunning==0)
+	{
+		vars.isRunning=1;
+		return true;
+	}
+	return false;
+}
+
+exit
+{
+	vars.isRunning=0;
 }
 
 /*split
+  {
+  return false; //This part currently doesn't work
+  if(current.arenaDone==1 && old.arenaDone==0)
+  {
+  vars.arenas=vars.arenas+1;
+  }
+
+//if((settings["NG+"] && current.arenaDone==1 && old.arenaDone==0) || (vars.splits==0 && vars.arenas==4) || (vars.splits<6 && vars.arenas==5) || vars.arenas==3)
+if(current.arenaDone==1)
 {
-	return false; //This part currently doesn't work
-	if(current.arenaDone==1 && old.arenaDone==0)
-	{
-		vars.arenas=vars.arenas+1;
-	}
+vars.splits=vars.splits+1;
+vars.arenas=0;
+return true;
+}
 
-	//if((settings["NG+"] && current.arenaDone==1 && old.arenaDone==0) || (vars.splits==0 && vars.arenas==4) || (vars.splits<6 && vars.arenas==5) || vars.arenas==3)
-	if(current.arenaDone==1)
-	{
-		vars.splits=vars.splits+1;
-		vars.arenas=0;
-		return true;
-	}
-
-	return false;
+return false;
 }
 
 start
 {
-	return false; //This part currently doesn't work
-	return (current.isLoading != 0 && vars.splits==0 && vars.arenas==0); //Start on first loading screen
+return false; //This part currently doesn't work
+return (current.isLoading != 0 && vars.splits==0 && vars.arenas==0); //Start on first loading screen
 }*/
